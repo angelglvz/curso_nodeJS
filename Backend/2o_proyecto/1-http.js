@@ -9,6 +9,18 @@ const processRequest = ((req, res) => {
         res.statusCode = 200
         res.setHeader('Content-Type', 'text/html; charset=utf8')
         res.end('<h1>Bienvenido a mi página</h1>')
+    }else if(req.url ==='/imagen.jpg'){
+        
+        fs.readFile('./imagen_cv.jpg', (err, data) =>{
+            if(err){
+                res.statusCode = 500
+                res.end('<h1>500 Internal Server Error</h1>')
+            }
+            else{
+                res.setHeader('Content-Type', 'image/jpg')
+                res.end(data)
+            }
+        })
     }
     else if(req.url === '/contacto'){
         res.statusCode = 200

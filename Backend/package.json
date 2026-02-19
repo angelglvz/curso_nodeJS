@@ -1,0 +1,25 @@
+{
+  "name": "curso-node",
+  "version": "1.0.0",
+  "description": "mi curso de node.js",
+  "keywords": [
+    "curso",
+    "node",
+    "node.js"
+  ],
+  "homepage": "https://github.com/angelglvz/curso_nodeJS#readme",
+  "bugs": {
+    "url": "https://github.com/angelglvz/curso_nodeJS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angelglvz/curso_nodeJS.git"
+  },
+  "license": "MIT",
+  "author": "angel gamero",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

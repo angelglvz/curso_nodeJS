@@ -1,54 +1,52 @@
 const http = require('node:http')
 
+// commonJS -> modulos clásicos de node
 const dittoJSON = require('./pokemon/ditto.json')
 
-
 const processRequest = (req, res) => {
-    const { method, url } = req
+  const { method, url } = req
 
-    switch (method) {
-        case 'GET':
-            switch (url){
-                case '/':
-                    res.setHeader('Content-Type', 'text/html; charset=utf8')
-                    res.end('<h1>Bienvenido a mi página</h1>')
-                case '/pokemon/ditto':
-                    res.setHeader('Content-Type', 'application/json; charset=utf-8')
-                    return res.end(JSON.stringify(dittoJSON))
-                default:
-                    res.statusCode = 404
-                    res.setHeader('Content-Type', 'text/html; charset=utf-8')
-                    return res.end('<h1>404</h1>')
+  switch (method) {
+    case 'GET':
+      switch (url) {
+        case '/pokemon/ditto':
 
-            }
-        case 'POST':
-            switch (url) {
-                case '/pokemon': {
-                let body = ''
+          res.setHeader('Content-Type', 'application/json; charset=utf-8')
+          return res.end(JSON.stringify(dittoJSON))
+        default:
+          res.statusCode = 404
+          res.setHeader('Content-Type', 'text/html; charset=utf-8')
+          return res.end('<h1>404</h1>')
+      }
 
-                // escuchar el evento data
-                req.on('data', chunk => {
-                    body += chunk.toString()
-                })
+    case 'POST':
+      switch (url) {
+        case '/pokemon': {
+          let body = ''
 
-                req.on('end', () => {
-                    const data = JSON.parse(body)
-                    // llamar a una base de datos para guardar la info
-                    res.writeHead(201, { 'Content-Type': 'application/json; charset=utf-8' })
+          // escuchar el evento data
+          req.on('data', chunk => {
+            body += chunk.toString()
+          })
 
-                    data.timestamp = Date.now()
-                    res.end(JSON.stringify(data))
-                })
+          req.on('end', () => {
+            const data = JSON.parse(body)
+            // llamar a una base de datos para guardar la info
+            res.writeHead(201, { 'Content-Type': 'application/json; charset=utf-8' })
 
-                break
-                }
+            data.timestamp = Date.now()
+            res.end(JSON.stringify(data))
+          })
 
-                default:
-                res.statusCode = 404
-                res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-                return res.end('404 Not Found')
-            }
-    }
+          break
+        }
+
+        default:
+          res.statusCode = 404
+          res.setHeader('Content-Type', 'text/plain; charset=utf-8')
+          return res.end('404 Not Found')
+      }
+  }
 }
 
 const server = http.createServer(processRequest)
